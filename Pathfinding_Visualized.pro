@@ -26,10 +26,13 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        Visualization.cpp
+        Visualization.cpp \
+    Map.cpp
 
 HEADERS += \
-        Visualization.h
+        Visualization.h \
+    Node.h \
+    Map.h
 
 FORMS += \
         Visualization.ui
