@@ -12,8 +12,15 @@ class Map
 public:
     Map(int length, int width);
 
+    bool isFilled(int x, int y);
+    void setFilled(int x, int y, bool filled);
+
 private:
     int length, width;
+    Node ***grid;
+
+    void  initializeGrid();
+    Node* getNodeAt(int x, int y);
 
 };
 

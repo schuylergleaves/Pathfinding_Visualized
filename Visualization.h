@@ -2,6 +2,7 @@
 #define VISUALIZATION_H
 
 #include <QMainWindow>
+#include "Map.h"
 
 namespace Ui {
 class Visualization;
@@ -17,6 +18,11 @@ public:
 
 private:
     Ui::Visualization *ui;
+
+    Map *map;
+
+    const int MAP_LENGTH = 20;
+    const int MAP_WIDTH  = 20;
 };
 
 #endif // VISUALIZATION_H

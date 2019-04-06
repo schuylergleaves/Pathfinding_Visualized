@@ -14,11 +14,16 @@ struct Node {
         this->full = false;
     }
 
-    bool isFull(){
+    Node(){
+        this->x = -1;
+        this->y = -1;
+    }
+
+    bool isFilled(){
         return this->full;
     }
 
-    void setFull(bool full){
+    void setFilled(bool full){
         this->full = full;
     }
 };
