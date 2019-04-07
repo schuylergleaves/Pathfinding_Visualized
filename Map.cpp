@@ -9,16 +9,17 @@ Map::Map(int length, int width)
     this->initializeGrid();
 }
 
-/* Grid is 3D array of pointers to nodes */
+/* Grid is 3D array of pointers to nodes
+   These nodes will be created with x and y equal to their rectangle counterparts */
 void Map::initializeGrid(){
     grid = new Node**[length];
     for(int i = 0; i < length; i++){
         grid[i] = new Node*[width];
     }
 
-    for(int x = 0; x < length; x++){
-        for(int y = 0; y < width; y++){
-            grid[x][y] = new Node(x,y);
+    for(int i = 0; i < length; i++){
+        for(int j = 0; j < width; j++){
+            grid[i][j] = new Node(i,j);
         }
     }
 }

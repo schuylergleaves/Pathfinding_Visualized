@@ -19,6 +19,14 @@ struct Node {
         this->y = -1;
     }
 
+    int getX(){
+        return this->x;
+    }
+
+    int getY(){
+        return this->y;
+    }
+
     bool isFilled(){
         return this->full;
     }

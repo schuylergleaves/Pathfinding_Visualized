@@ -1,3 +1,2 @@
-1. Complete preliminary map data structure.
-2. Figure out how to print map of empty nodes to UI
-3. Allow clicking a node in map to change it between filled and unfilled
+1. Allow alternating between filled and unfilled
+2. refactor code / comment

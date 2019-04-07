@@ -32,7 +32,8 @@ SOURCES += \
 HEADERS += \
         Visualization.h \
     Node.h \
-    Map.h
+    Map.h \
+    Constants.h
 
 FORMS += \
         Visualization.ui

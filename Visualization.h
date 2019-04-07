@@ -2,6 +2,9 @@
 #define VISUALIZATION_H
 
 #include <QMainWindow>
+#include <QtGui>
+#include <QGraphicsScene>
+#include "Constants.h"
 #include "Map.h"
 
 namespace Ui {
@@ -16,13 +19,31 @@ public:
     explicit Visualization(QWidget *parent = nullptr);
     ~Visualization();
 
+private slots:
+    void on_btnGenerate_clicked();
+
 private:
+    /* pointers */
     Ui::Visualization *ui;
+    Map               *map;
+    QRect            **rectangles;
 
-    Map *map;
+    /* member variables */
+    bool shouldGenerateMap = false;
 
-    const int MAP_LENGTH = 20;
-    const int MAP_WIDTH  = 20;
+    /* initialization functions */
+    void init();
+
+    /* ui functions */
+    void drawMap(QPainter *painter);
+
+    /* event handlers */
+    void paintEvent(QPaintEvent *);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+
+    /* helper functions */
+
 };
 
 #endif // VISUALIZATION_H
