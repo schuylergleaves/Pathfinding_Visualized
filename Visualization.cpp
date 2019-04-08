@@ -16,7 +16,7 @@ Visualization::~Visualization()
 
 /* Initialization */
 void Visualization::init(){
-    //map init - creates all nodes
+    //map init - creates all nodes; set start & end nodes
     map = new Map(MAP_LENGTH, MAP_WIDTH);
 
     //create rectangle for each node in map
@@ -76,6 +76,9 @@ void Visualization::drawMap(QPainter *painter){
 }
 
 
+
+
+
 /*
  * ==============================
  * ===== UI ACTION HANDLERS =====
@@ -91,6 +94,12 @@ void Visualization::on_btnGenerate_clicked()
 void Visualization::on_btnRun_clicked()
 {
     pathfinder->Run(BREADTH_FIRST);
+}
+
+void Visualization::on_btnReset_clicked()
+{
+    map->reset();
+    this->update();
 }
 
 
@@ -150,13 +159,3 @@ void Visualization::mousePressEvent(QMouseEvent *e){
         }
     }
 }
-
-
-
-
-
-/*
- * ============================
- * ===== HELPER FUNCTIONS =====
- * ============================
- */

@@ -26,6 +26,7 @@ public:
 private slots:
     void on_btnGenerate_clicked();
     void on_btnRun_clicked();
+    void on_btnReset_clicked();
 
 private:
     /* pointers */
@@ -46,9 +47,6 @@ private:
     void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *e);
     void mousePressEvent(QMouseEvent *e);
-
-    /* helper functions */
-
 };
 
 #endif // VISUALIZATION_H

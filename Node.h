@@ -80,7 +80,7 @@ struct Node {
     }
 
     void setWall(bool wall){
-        if(this->isEditable())
+        if(isEditable() && !isPath())
             this->wall = wall;
     }
 

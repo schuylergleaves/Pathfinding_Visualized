@@ -15,6 +15,7 @@ public:
 
     bool isWall(int row, int col);
     void setWall(int row, int col, bool filled);
+    void reset();
 
     Node* getNodeAt(int row, int col);
 

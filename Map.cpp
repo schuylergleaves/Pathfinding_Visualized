@@ -23,6 +23,19 @@ void Map::initializeGrid(){
     }
 }
 
+/* sets all nodes back to default state */
+void Map::reset(){
+    for(int row = 0; row < length; row++){
+        for(int col = 0; col < width; col++){
+            grid[row][col]->setPath(false);
+            grid[row][col]->setWall(false);
+            grid[row][col]->setAccessed(false);
+            grid[row][col]->setEditable(true);
+            grid[row][col]->setParent(nullptr);
+        }
+    }
+}
+
 void Map::setWall(int row, int col, bool filled){
     Node* target = getNodeAt(row, col);
     target->setWall(filled);
