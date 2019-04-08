@@ -27,13 +27,15 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         Visualization.cpp \
-    Map.cpp
+    Map.cpp \
+    Pathfinder.cpp
 
 HEADERS += \
         Visualization.h \
     Node.h \
     Map.h \
-    Constants.h
+    Constants.h \
+    Pathfinder.h
 
 FORMS += \
         Visualization.ui

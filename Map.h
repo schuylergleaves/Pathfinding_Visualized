@@ -13,10 +13,10 @@ class Map
 public:
     Map(int length, int width);
 
-    bool isFilled(int x, int y);
-    void setFilled(int x, int y, bool filled);
+    bool isWall(int row, int col);
+    void setWall(int row, int col, bool filled);
 
-    Node* getNodeAt(int x, int y);
+    Node* getNodeAt(int row, int col);
 
 private:
     int length, width;

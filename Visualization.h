@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include "Constants.h"
 #include "Map.h"
+#include "Pathfinder.h"
 
 namespace Ui {
 class Visualization;
@@ -19,14 +20,18 @@ public:
     explicit Visualization(QWidget *parent = nullptr);
     ~Visualization();
 
+    //public so that Pathfinder can access
+    Ui::Visualization *ui;
+
 private slots:
     void on_btnGenerate_clicked();
+    void on_btnRun_clicked();
 
 private:
     /* pointers */
-    Ui::Visualization *ui;
     Map               *map;
     QRect            **rectangles;
+    Pathfinder        *pathfinder;
 
     /* member variables */
     bool shouldGenerateMap = false;

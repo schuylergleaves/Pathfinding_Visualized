@@ -49,6 +49,19 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="btnRun">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string> RUN BFS</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

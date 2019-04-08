@@ -25,12 +25,15 @@ void Visualization::init(){
         rectangles[i] = new QRect[MAP_WIDTH];
     }
 
-    for(int i = 0; i < MAP_LENGTH; i++){
-        for(int j = 0; j < MAP_LENGTH; j++){
+    for(int row = 0; row < MAP_LENGTH; row++){
+        for(int col = 0; col < MAP_LENGTH; col++){
             //creates grid based on starting x and y, and current position in map
-            rectangles[i][j] = QRect(MAP_STARTING_X + (j * RECT_WIDTH), MAP_STARTING_Y + (i * RECT_WIDTH), RECT_WIDTH, RECT_WIDTH);
+            rectangles[row][col] = QRect(MAP_STARTING_X + (col * RECT_WIDTH), MAP_STARTING_Y + (row * RECT_WIDTH), RECT_WIDTH, RECT_WIDTH);
         }
     }
+
+    //pathfinder inti - must pass pointer to this so that pathfinder can update ui
+    pathfinder = new Pathfinder(map, this);
 }
 
 
@@ -42,24 +45,35 @@ void Visualization::init(){
  * ========================
  */
 
-/* draws grid map to UI (converting each node into a rectangle) */
+/* draws grid map to UI (converting each node into a rectangle of relavent color) */
 void Visualization::drawMap(QPainter *painter){
     painter->setPen(Qt::black);
 
-    for(int i = 0; i < MAP_LENGTH; i++){
-        for(int j = 0; j < MAP_WIDTH; j++){
-            Node* target = map->getNodeAt(i, j);
+    for(int row = 0; row < MAP_LENGTH; row++){
+        for(int col = 0; col < MAP_WIDTH; col++){
+            Node* target = map->getNodeAt(row, col);
 
-            painter->drawRect(rectangles[i][j]);
+            painter->drawRect(rectangles[row][col]);
 
-            if(target->isFilled())
-                painter->fillRect(rectangles[i][j], Qt::black);
+            if(target->isWall())
+                painter->fillRect(rectangles[row][col], Qt::black);
+
+            if(target->isAccessed())
+                painter->fillRect(rectangles[row][col], Qt::lightGray);
+
+            if(target->isPath())
+                painter->fillRect(rectangles[row][col], Qt::blue);
         }
     }
+
+    //handle start rectangle
+    map->getNodeAt(STARTNODE_ROW, STARTNODE_COL)->setEditable(false);
+    painter->fillRect(rectangles[STARTNODE_ROW][STARTNODE_COL], Qt::green);
+
+    //handle end rectangle
+    map->getNodeAt(ENDNODE_ROW, ENDNODE_COL)->setEditable(false);
+    painter->fillRect(rectangles[ENDNODE_ROW][ENDNODE_COL], Qt::red);
 }
-
-
-
 
 
 /*
@@ -72,6 +86,11 @@ void Visualization::on_btnGenerate_clicked()
 {
     shouldGenerateMap = true;
     this->update();
+}
+
+void Visualization::on_btnRun_clicked()
+{
+    pathfinder->Run(BREADTH_FIRST);
 }
 
 
@@ -92,32 +111,41 @@ void Visualization::paintEvent(QPaintEvent *){
     }
 }
 
-/* if user drags over a rectangle on the grid while holding mouse, set the node representing that rectangle to be filled */
+/* handles editing nodes when user drags mouse over rectangles */
 void Visualization::mouseMoveEvent(QMouseEvent *e){
-    //handles left button clicks
-    if(e->buttons() == Qt::LeftButton){
-        for(int i = 0; i < MAP_LENGTH; i++){
-            for(int j = 0; j < MAP_WIDTH; j++){
-                if(rectangles[i][j].contains(e->pos())){
-                    map->setFilled(i, j, true);
-                    this->update();
-                    return;
-                }
+    for(int i = 0; i < MAP_LENGTH; i++){
+        for(int j = 0; j < MAP_WIDTH; j++){
+            if(rectangles[i][j].contains(e->pos())){
+                //left click => fill node
+                if(e->buttons() == Qt::LeftButton)
+                    map->setWall(i, j, true);
+
+                //right click => unfill node
+                if(e->buttons() == Qt::RightButton)
+                    map->setWall(i, j, false);
+
+                this->update();
+                return;
             }
         }
     }
 }
 
-/* if user clicks on a rectangle on the grid, set the node representing that rectangle to be filled */
+/* handles editing nodes when user clicks over rectangles */
 void Visualization::mousePressEvent(QMouseEvent *e){
-    if(e->button() == Qt::LeftButton){
-        for(int i = 0; i < MAP_LENGTH; i++){
-            for(int j = 0; j < MAP_WIDTH; j++){
-                if(rectangles[i][j].contains(e->pos())){
-                    map->setFilled(i, j, true);
-                    this->update();
-                    return;
-                }
+    for(int i = 0; i < MAP_LENGTH; i++){
+        for(int j = 0; j < MAP_WIDTH; j++){
+            if(rectangles[i][j].contains(e->pos())){
+                //left click => fill node
+                if(e->buttons() == Qt::LeftButton)
+                    map->setWall(i, j, true);
+
+                //right click => unfill node
+                if(e->buttons() == Qt::RightButton)
+                    map->setWall(i, j, false);
+
+                this->update();
+                return;
             }
         }
     }
@@ -132,4 +160,3 @@ void Visualization::mousePressEvent(QMouseEvent *e){
  * ===== HELPER FUNCTIONS =====
  * ============================
  */
-

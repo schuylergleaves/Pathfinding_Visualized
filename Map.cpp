@@ -9,31 +9,36 @@ Map::Map(int length, int width)
     this->initializeGrid();
 }
 
-/* Grid is 3D array of pointers to nodes
-   These nodes will be created with x and y equal to their rectangle counterparts */
+/* Grid is 3D array of pointers to nodes */
 void Map::initializeGrid(){
     grid = new Node**[length];
     for(int i = 0; i < length; i++){
         grid[i] = new Node*[width];
     }
 
-    for(int i = 0; i < length; i++){
-        for(int j = 0; j < width; j++){
-            grid[i][j] = new Node(i,j);
+    for(int row = 0; row < length; row++){
+        for(int col = 0; col < width; col++){
+            grid[row][col] = new Node(row,col);
         }
     }
 }
 
-void Map::setFilled(int x, int y, bool filled){
-    Node* target = getNodeAt(x, y);
-    target->setFilled(filled);
+void Map::setWall(int row, int col, bool filled){
+    Node* target = getNodeAt(row, col);
+    target->setWall(filled);
 }
 
-bool Map::isFilled(int x, int y){
-    Node* target = getNodeAt(x, y);
-    return target->isFilled();
+bool Map::isWall(int row, int col){
+    Node* target = getNodeAt(row, col);
+    return target->isWall();
 }
 
-Node* Map::getNodeAt(int x, int y){
-    return this->grid[x][y];
+Node* Map::getNodeAt(int row, int col){
+    if(row < 0 || row >= MAP_LENGTH)
+        return nullptr;
+
+    if(col < 0 || col >= MAP_WIDTH)
+        return nullptr;
+
+    return this->grid[row][col];
 }
